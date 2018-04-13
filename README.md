@@ -1,1 +1,1 @@
-## Find Your Flight - Flight search app built with ReactJS and Redux. The app uses the [Lufthansa API](https://developer.lufthansa.com/docs).
+### Find Your Flight - Flight search app built with ReactJS and Redux. The app uses the [Lufthansa API](https://developer.lufthansa.com/docs).
