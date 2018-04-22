@@ -1,1 +1,12 @@
-### Find Your Flight - Flight search app built with ReactJS and Redux. The app uses the [Lufthansa API](https://developer.lufthansa.com/docs).
+### Find Your Flight - Flight search app built on [Lufthansa Open API](https://developer.lufthansa.com/docs).
+* This app is built with React, Redux, Boostrap 4 ([reactstrap](http://reactstrap.github.io/)) and SASS
+
+### Installation
+```bash
+yarn install
+yarn dev-server //run dev-server
+yarn build //build production
+yarn start //run express server. it listens on port 3000
+```
+
+[CHECK OUT LIVE APP HERE HOSTED ON HEROKU](https://find-your-flight.herokuapp.com/)
