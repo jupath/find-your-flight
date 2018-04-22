@@ -10,7 +10,8 @@
     "build": "webpack --mode production --config webpack.prod.js",
     "start": "node server/server.js",
     "test": "jest --config=jest.config.json",
-    "lint": "eslint **/*.js"
+    "lint": "eslint **/*.js",
+    "heroku-postbuild": "yarn run build"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
