@@ -56,14 +56,14 @@ class Sidebar extends Component {
     const toAirportCity = toAirportName.substr(0, toAirportName.indexOf(','));
     const fromAirportCity = fromAirportName.substr(0, fromAirportName.indexOf(','));
     return (
-      <div>
-        <div>
+      <div className="sidebar">
+        <div className="mb-5">
           <h5>From {fromAirportCity} to {toAirportCity}</h5>
           <h6>Departure from {fromAirportCity}</h6>
           {this.state.fromDepartureRange[0]}:00{' '}-{' '}
           {this.state.fromDepartureRange[1]}:{this.state.fromDepartureRange[1] === 23 ? '59' : '00'}
           <Range
-            className="my-3"
+            className="my-3 sidebar_slider"
             allowCross={false}
             min={0}
             max={23}

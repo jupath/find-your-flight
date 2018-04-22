@@ -29,18 +29,22 @@ const FlightsList = (props) => {
 
   return (
     <div>
-      <p>{props.fromAirportName}  {props.toAirportName}</p>
+      <div className="list__header">
+        <div className="font-weight-bold">{props.fromAirportName}</div>
+        <div className="plane" />
+        <div className="font-weight-bold">{props.toAirportName}</div>
+      </div>
       {
         Array.isArray(props.fromFlights) && props.fromFlights.length > 0 &&
-        <div>
-          <p>Direct flights</p>
+        <div className="my-3">
+          {directToFlights.length > 0 && <p className="font-weight-bold">Direct flights</p>}
           {directFromFlights.map(fromFlight =>
             (<FlightsListItem
               key={fromFlight.id}
               flight={fromFlight}
             />))
           }
-          {fromFlightsWithStops.length > 0 && <p>Flights with stops</p>}
+          {fromFlightsWithStops.length > 0 && <p className="font-weight-bold">Flights with stops</p>}
           {fromFlightsWithStops.map(fromFlight =>
             (<FlightsListItemWithStops
               key={fromFlight.id}
@@ -52,22 +56,26 @@ const FlightsList = (props) => {
       {
         props.fromFlights.length === 0
         &&
-        <div className="text-center">
+        <div className="text-center font-weight-bold text-danger py-3">
           Sorry, there are no flights from {props.fromAirportName} to {props.toAirportName} that match your search
         </div>
       }
-      <p>{props.toAirportName}  {props.fromAirportName}</p>
+      <div className="list__header">
+        <div className="font-weight-bold">{props.toAirportName}</div>
+        <div className="plane" />
+        <div className="font-weight-bold">{props.fromAirportName}</div>
+      </div>
       {
         Array.isArray(props.toFlights) && props.toFlights.length > 0 &&
-        <div>
-          <p>Direct flights</p>
+        <div className="mt-3">
+          {directToFlights.length > 0 && <p className="font-weight-bold">Direct flights</p>}
           {directToFlights.map(toFlight =>
             (<FlightsListItem
               key={toFlight.id}
               flight={toFlight}
             />))
           }
-          {toFlightsWithStops.length > 0 && <p>Flights with stops</p>}
+          {toFlightsWithStops.length > 0 && <p className="font-weight-bold">Flights with stops</p>}
           {toFlightsWithStops.map(toFlight =>
             (<FlightsListItemWithStops
               key={toFlight.id}
@@ -79,7 +87,7 @@ const FlightsList = (props) => {
       {
         props.toFlights.length === 0
         &&
-        <div className="text-center">
+        <div className="text-center font-weight-bold text-danger py-3">
           Sorry, there are no flights from {props.toAirportName} to {props.fromAirportName} that match your search
         </div>
       }

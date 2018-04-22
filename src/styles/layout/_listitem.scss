@@ -1,4 +1,41 @@
+.listitem {
+  background-color: white;
+  border: 1px solid $grey;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+
+  >.row {
+    align-items: center;
+  }
+}
+
 .listitem__body {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+}
+
+.listitem__duration {
+  width: 150px;
+}
+
+.listitem__duration__decor {
+  align-items: center;
+  display: flex;
+  height: 20px;
+  margin-top: 0.5rem;
+  > .plane {
+    height: 20px;
+  }
+}
+
+.listitem__duration__line {
+  background-color: $grey;
+  height: 2px;
+  width: 100%;
+}
+
+.list__flights-with-stops {
+  .listitem__duration {
+    margin-top: 0;
+    align-self: center;
+  }
 }

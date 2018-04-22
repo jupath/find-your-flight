@@ -1,0 +1,18 @@
+.rc-slider-track {
+  background-color: $green;
+}
+
+.rc-slider-rail {
+  background-color: $grey;
+}
+
+.rc-slider-handle {
+  border: 2px solid $green;
+  &:active {
+    border-color: $green;
+    box-shadow: 0 0 5px $green;
+  }
+  &:hover {
+    border-color: $green;
+  }
+}

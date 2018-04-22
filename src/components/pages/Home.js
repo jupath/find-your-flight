@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SearchSection from '../layout/SearchSection';
 import FlightsList from '../layout/FlightsList';
 import Sidebar from '../layout/Sidebar';
+import Loader from '../layout/Loader';
 
 const Home = (props) => {
   const {
@@ -16,20 +17,20 @@ const Home = (props) => {
   let message;
 
   if (isLoading) {
-    message = 'Loading...';
+    message = <Loader />;
   } else if (error) {
-    message = 'Sorry, there are no flights that match your search';
+    message = <div className="font-weight-bold text-center text-danger">Sorry, there are no flights that match your search</div>;
   }
 
   return (
     <div>
-      <header className="header">
+      <header className="header mb-5">
         <div className="container">
-          <h3 className="header__logo py-3">Find Your Flight</h3>
+          <h3 className="header__logo py-3 font-weight-bold">Find Your Flight</h3>
           <div className="search-section py-5">
             <div className="search-section__content py-3">
               <h4 className="text-center pb-4">This is a React/Redux project built on <a href="https://developer.lufthansa.com/docs" className="text-info" target="_blank" rel="noopener noreferrer">Lufthansa Open API</a>.<br />
-              Sorry, you can not book flight tickets here (yet). :)
+              You can not book flight tickets here (yet). :)
               </h4>
               <SearchSection />
             </div>
