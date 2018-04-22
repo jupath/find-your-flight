@@ -1,5 +1,5 @@
 ### Find Your Flight - Flight search app built on [Lufthansa Open API](https://developer.lufthansa.com/docs).
-* This app is built with React, Redux, Boostrap 4 ([reactstrap](http://reactstrap.github.io/)) and SASS
+* This app is built with React, Redux, Bootstrap 4 ([reactstrap](http://reactstrap.github.io/)) and SASS
 
 ### Installation
 ```bash
