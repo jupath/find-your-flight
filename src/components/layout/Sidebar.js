@@ -1,79 +1,114 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Slider, { Range } from 'rc-slider';
+import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import PropTypes from 'prop-types';
-import { durationFilter, departureFilter, arrivalFilter } from '../../actions/filters';
+import {
+  fromDepartureFilter,
+  fromArrivalFilter,
+  toDepartureFilter,
+  toArrivalFilter,
+} from '../../actions/filters';
 
 class Sidebar extends Component {
   state = {
-    arrival: [0, 23],
-    departure: [0, 23],
-    duration: 7,
+    fromArrivalRange: [0, 23],
+    fromDepartureRange: [0, 23],
+    toArrivalRange: [0, 23],
+    toDepartureRange: [0, 23],
   };
 
-  handleOnChangeArrival = (arrival) => {
-    this.setState({ arrival });
+  handleOnChangeFromArrival = (fromArrivalRange) => {
+    this.setState({ fromArrivalRange });
   }
 
-  handleOnChangeDeparture = (departure) => {
-    this.setState({ departure });
+  handleOnChangeFromDeparture = (fromDepartureRange) => {
+    this.setState({ fromDepartureRange });
   }
 
-  handelOnChangeDuration = (duration) => {
-    this.setState({ duration });
+  dispatchNewFromArrival = () => {
+    this.props.setFromArrivalFilter(this.state.fromArrivalRange);
   }
 
-  dispatchNewArrival = () => {
-
+  dispatchNewFromDeparture= () => {
+    this.props.setFromDepartureFilter(this.state.fromDepartureRange);
   }
 
-  dispatchNewDeparture= () => {
-    
+  handleOnChangeToArrival = (toArrivalRange) => {
+    this.setState({ toArrivalRange });
   }
 
-  dispatchNewDuration = () => {
-    this.props.setDuration(this.state.duration);
+  handleOnChangeToDeparture = (toDepartureRange) => {
+    this.setState({ toDepartureRange });
+  }
+
+  dispatchNewToArrival = () => {
+    this.props.setToArrivalFilter(this.state.toArrivalRange);
+  }
+
+  dispatchNewToDeparture= () => {
+    this.props.setToDepartureFilter(this.state.toDepartureRange);
   }
 
   render() {
+    const { toAirportName, fromAirportName } = this.props;
+
+    const toAirportCity = toAirportName.substr(0, toAirportName.indexOf(','));
+    const fromAirportCity = fromAirportName.substr(0, fromAirportName.indexOf(','));
     return (
       <div>
         <div>
-          <h5>Travel time</h5>
-          {1}h - {this.state.duration}h
-          <Slider
-            className="my-3"
-            min={1}
-            max={7}
-            defaultValue={7}
-            tipTransitionName="rc-slider-tooltip-zoom-down"
-            onChange={this.handelOnChangeDuration}
-            onAfterChange={this.dispatchNewDuration}
-          />
-          <h5>Departure from {'Budapest'}</h5>
-          {this.state.departure[0]}:00 - 
-          {this.state.departure[1]}:{this.state.departure[1] === 23 ? '59' : '00'}
+          <h5>From {fromAirportCity} to {toAirportCity}</h5>
+          <h6>Departure from {fromAirportCity}</h6>
+          {this.state.fromDepartureRange[0]}:00{' '}-{' '}
+          {this.state.fromDepartureRange[1]}:{this.state.fromDepartureRange[1] === 23 ? '59' : '00'}
           <Range
             className="my-3"
             allowCross={false}
             min={0}
             max={23}
             defaultValue={[0, 23]}
-            onChange={this.handleOnChangeDeparture}
-            onAfterChange={this.dispatchNewDeparture}
+            onChange={this.handleOnChangeFromDeparture}
+            onAfterChange={this.dispatchNewFromDeparture}
           />
-          <h5>Arrival in {'Frankfurt'}</h5>
-          {this.state.arrival[0]}:00 - 
-          {this.state.arrival[1]}:{this.state.arrival[1] === 23 ? '59' : '00'}
+          <h6>Arrival in {toAirportCity}</h6>
+          {this.state.fromArrivalRange[0]}:00{' '}-{' '}
+          {this.state.fromArrivalRange[1]}:{this.state.fromArrivalRange[1] === 23 ? '59' : '00'}
           <Range
             className="my-3"
             allowCross={false}
             min={0}
             max={23}
             defaultValue={[0, 23]}
-            onChange={this.handleOnChangeArrival}
-            onAfterChange={this.dispatchNewArrival}
+            onChange={this.handleOnChangeFromArrival}
+            onAfterChange={this.dispatchNewFromArrival}
+          />
+        </div>
+        <div>
+          <h5>From {toAirportCity} to {fromAirportCity}</h5>
+          <h6>Departure from {toAirportCity}</h6>
+          {this.state.toDepartureRange[0]}:00{' '}-{' '}
+          {this.state.toDepartureRange[1]}:{this.state.toDepartureRange[1] === 23 ? '59' : '00'}
+          <Range
+            className="my-3"
+            allowCross={false}
+            min={0}
+            max={23}
+            defaultValue={[0, 23]}
+            onChange={this.handleOnChangeToDeparture}
+            onAfterChange={this.dispatchNewToDeparture}
+          />
+          <h6>Arrival in {toAirportCity}</h6>
+          {this.state.toArrivalRange[0]}:00{' '}-{' '}
+          {this.state.toArrivalRange[1]}:{this.state.toArrivalRange[1] === 23 ? '59' : '00'}
+          <Range
+            className="my-3"
+            allowCross={false}
+            min={0}
+            max={23}
+            defaultValue={[0, 23]}
+            onChange={this.handleOnChangeToArrival}
+            onAfterChange={this.dispatchNewToArrival}
           />
         </div>
       </div>
@@ -82,11 +117,24 @@ class Sidebar extends Component {
 }
 
 Sidebar.propTypes = {
-  setDuration: PropTypes.func.isRequired,
+  toAirportName: PropTypes.string,
+  fromAirportName: PropTypes.string,
+  setFromDepartureFilter: PropTypes.func.isRequired,
+  setFromArrivalFilter: PropTypes.func.isRequired,
+  setToDepartureFilter: PropTypes.func.isRequired,
+  setToArrivalFilter: PropTypes.func.isRequired,
+};
+
+Sidebar.defaultProps = {
+  toAirportName: '',
+  fromAirportName: '',
 };
 
 const mapDispatchToProps = dispatch => ({
-  setDuration: duration => dispatch(durationFilter(duration)),
+  setFromDepartureFilter: departureRange => dispatch(fromDepartureFilter(departureRange)),
+  setFromArrivalFilter: arrivalRange => dispatch(fromArrivalFilter(arrivalRange)),
+  setToDepartureFilter: departureRange => dispatch(toDepartureFilter(departureRange)),
+  setToArrivalFilter: arrivalRange => dispatch(toArrivalFilter(arrivalRange)),
 });
 
 export default connect(null, mapDispatchToProps)(Sidebar);

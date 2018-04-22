@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 const FlightsListItem = (props) => {
   const {
@@ -52,6 +53,10 @@ const FlightsListItem = (props) => {
       </div>
     </div>
   );
+};
+
+FlightsListItem.propTypes = {
+  flight: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default FlightsListItem;

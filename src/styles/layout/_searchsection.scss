@@ -1,0 +1,27 @@
+.search-section {
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.search-section__content {
+  background: rgba(black, 0.75);
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.from-wrapper__labels {
+  display: flex;
+  div:first-child,
+  div:nth-child(2) {
+    width: 250px;
+  }
+  div:nth-child(3) {
+    width: 168px;
+  }
+}

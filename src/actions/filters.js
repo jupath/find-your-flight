@@ -1,19 +1,19 @@
-export const initialDuartion = durations => ({
-  type: 'SET_INITIAL_DURATIONS',
-  durations,
+export const fromDepartureFilter = fromFlightsDepartureRange => ({
+  type: 'SET_FROM_DEPARTURE_FILTER',
+  fromFlightsDepartureRange,
 });
 
-export const durationFilter = duration => ({
-  type: 'SET_DURATION',
-  duration,
+export const fromArrivalFilter = fromFlightsArrivalRange => ({
+  type: 'SET_FROM_ARRIVAL_FILTER',
+  fromFlightsArrivalRange,
 });
 
-export const departureFilter = departure => ({
-  type: 'SET_DEPARTURE',
-  departure,
+export const toDepartureFilter = toFlightsDepartureRange => ({
+  type: 'SET_TO_DEPARTURE_FILTER',
+  toFlightsDepartureRange,
 });
 
-export const arrivalFilter = arrival => ({
-  type: 'SET_ARRIVAL',
-  arrival,
+export const toArrivalFilter = toFlightsArrivalRange => ({
+  type: 'SET_TO_ARRIVAL_FILTER',
+  toFlightsArrivalRange,
 });

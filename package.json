@@ -1,7 +1,7 @@
 {
   "name": "find-your-flight",
   "version": "1.0.0",
-  "description": "Flight search app built with ReactJS and Redux. The app uses the Lufthansa API.",
+  "description": "Flight searc app built with ReactJS and Redux. The app uses the Lufthansa API.",
   "main": "index.js",
   "author": "Attila Taligas",
   "license": "MIT",

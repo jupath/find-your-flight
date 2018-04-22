@@ -10,16 +10,15 @@ import PropTypes from 'prop-types';
 import airports from '../../resources/airports.json';
 import apiUrl from '../../constants/apiUrl';
 import { isLoading, getFlights, setError } from '../../actions/flights';
-import { initialDuartion } from '../../actions/filters';
 
 class FlightSearchForm extends Component {
   state = {
     listOfAirports: [],
-    fromAirport: '',
-    toAirport: '',
+    fromAirport: {},
+    toAirport: {},
     isDirect: true,
-    startDate: moment().startOf('day'),
-    endDate: moment().startOf('day'),
+    startDate: moment().startOf('day').add(7, 'days'),
+    endDate: moment().startOf('day').add(14, 'days'),
     focusedInput: null,
   };
 
@@ -117,21 +116,6 @@ class FlightSearchForm extends Component {
       const fromFlights = await this.createFlightsArray(jsonOrigin.ScheduleResource.Schedule);
       const toFlights = await this.createFlightsArray(jsonDestination.ScheduleResource.Schedule);
 
-      // Calculate max and min durations for filters
-      const fromFlightsDurations = await fromFlights.map(flight =>
-        parseInt(flight.duration.substring(2, flight.duration.indexOf('H')), 10));
-      const fromFlightsDurationsMax = Math.max(...fromFlightsDurations);
-      const fromFlightsDurationsMin = Math.min(...fromFlightsDurations);
-
-      const toFlightsDurations = await toFlights.map(flight =>
-        parseInt(flight.duration.substring(2, flight.duration.indexOf('H')), 10));
-      const toFlightsDurationsMax = Math.max(...toFlightsDurations);
-      const toFlightsDurationsMin = Math.min(...toFlightsDurations);
-
-      this.props.setInitialDurationsFilter({
-
-      });
-
       // Set loading and error false
       this.props.isLoading(false);
       this.props.setError(false);
@@ -165,43 +149,62 @@ class FlightSearchForm extends Component {
 
   render() {
     return (
-      <div>
+      <div className="form-wrapper">
         <div>
-          <Label check>
-            <Input type="checkbox" checked={this.state.isDirect} onChange={this.onChangeDirect} />{' '}
-            Direct flights only?
-          </Label>
+          <div>
+            <div className="from-wrapper__labels">
+              <div>
+                From
+              </div>
+              <div>
+                To
+              </div>
+              <div>
+                Departure
+              </div>
+              <div>
+                Return
+              </div>
+            </div>
+            <Form inline onSubmit={this.submitSearchForm}>
+              <Select
+                name="fromAirport"
+                className="select--from"
+                value={this.state.fromAirport}
+                required
+                onChange={this.handleFromAirportChange}
+                options={this.state.listOfAirports}
+              />
+              <Select
+                name="toAirport"
+                value={this.state.toAirport}
+                required
+                onChange={this.handleToAirportChange}
+                options={this.state.listOfAirports}
+              />
+              <FormGroup>
+                <DateRangePicker
+                  startDate={this.state.startDate}
+                  startDateId="start-date"
+                  endDate={this.state.endDate}
+                  endDateId="end-date"
+                  onDatesChange={this.onDatesChange}
+                  focusedInput={this.state.focusedInput}
+                  onFocusChange={focusedInput => this.setState({ focusedInput })}
+                  numberOfMonths={1}
+                  showClearDates
+                />
+              </FormGroup>
+              <Button color="info" className="text-uppercase btn--searchfrom">Search</Button>
+            </Form>
+          </div>
+          <div>
+            <Label check>
+              <Input type="checkbox" checked={this.state.isDirect} onChange={this.onChangeDirect} />{' '}
+              Direct flights only?
+            </Label>
+          </div>
         </div>
-        <Form inline onSubmit={this.submitSearchForm}>
-          <Select
-            name="fromAirport"
-            value={this.state.fromAirport}
-            required
-            onChange={this.handleFromAirportChange}
-            options={this.state.listOfAirports}
-          />
-          <Select
-            name="toAirport"
-            value={this.state.toAirport}
-            required
-            onChange={this.handleToAirportChange}
-            options={this.state.listOfAirports}
-          />
-          <FormGroup>
-            <DateRangePicker
-              startDate={this.state.startDate}
-              startDateId="start-date"
-              endDate={this.state.endDate}
-              endDateId="end-date"
-              onDatesChange={this.onDatesChange}
-              focusedInput={this.state.focusedInput}
-              onFocusChange={focusedInput => this.setState({ focusedInput })}
-              numberOfMonths={1}
-              showClearDates
-            />
-          </FormGroup>
-          <Button>Search</Button>
-        </Form>
       </div>
     );
   }
@@ -212,7 +215,6 @@ FlightSearchForm.propTypes = {
   getFlights: PropTypes.func.isRequired,
   isLoading: PropTypes.func.isRequired,
   setError: PropTypes.func.isRequired,
-  setInitialDurationsFilter: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -223,7 +225,6 @@ const mapDispatchToProps = dispatch => ({
   getFlights: flightsObj => dispatch(getFlights(flightsObj)),
   isLoading: bool => dispatch(isLoading(bool)),
   setError: bool => dispatch(setError(bool)),
-  setInitialDurationsFilter: durations => dispatch(initialDuartion(durations)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FlightSearchForm);

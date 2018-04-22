@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Header = () => (
-  <header>
+  <header className="header">
     <div className="container">
-      Header
+      <h2 className="header__logo py-3">Find Your Flight</h2>
     </div>
   </header>
 );

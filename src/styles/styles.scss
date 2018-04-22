@@ -1,3 +1,5 @@
+@import './helpers/variables';
+
 // Bootstrap 4 components
 @import '../../node_modules/bootstrap/scss/functions';
 @import '../../node_modules/bootstrap/scss/variables';
@@ -28,5 +30,10 @@
 @import '../../node_modules/bootstrap/scss/buttons';
 
 // Custom styles
+@import './helpers/fonts';
 @import './components/forms';
+@import './components/buttons';
+@import './layout/general';
+@import './layout/header';
+@import './layout/searchsection';
 @import './layout/listitem';

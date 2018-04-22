@@ -3,30 +3,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FlightsListItem from './FlightsListItem';
 import FlightsListItemWithStops from './FlightsListItemWithStops';
+import { filteredFromFlights, filteredToFlights } from '../../selectors/flights';
 
 const FlightsList = (props) => {
-  const {
-    isLoading,
-    error,
-    fromFlights,
-    toFlights,
-    fromAirportName,
-    toAirportName,
-  } = props.flights;
-
-  let message;
-  if (isLoading) {
-    message = 'Loading...';
-  } else if (error) {
-    message = 'Sorry, there are no flights that match your search';
-  }
-
   const directFromFlights = [];
   const directToFlights = [];
   const fromFlightsWithStops = [];
   const toFlightsWithStops = [];
 
-  fromFlights.forEach((flight) => {
+  props.fromFlights.forEach((flight) => {
     if ('flights' in flight) {
       fromFlightsWithStops.push(flight);
     } else {
@@ -34,7 +19,7 @@ const FlightsList = (props) => {
     }
   });
 
-  toFlights.forEach((flight) => {
+  props.toFlights.forEach((flight) => {
     if ('flights' in flight) {
       toFlightsWithStops.push(flight);
     } else {
@@ -44,11 +29,10 @@ const FlightsList = (props) => {
 
   return (
     <div>
-      {message && message}
+      <p>{props.fromAirportName}  {props.toAirportName}</p>
       {
-        Array.isArray(fromFlights) && fromFlights.length > 0 && !message &&
+        Array.isArray(props.fromFlights) && props.fromFlights.length > 0 &&
         <div>
-          <p>{fromAirportName}  {toAirportName}</p>
           <p>Direct flights</p>
           {directFromFlights.map(fromFlight =>
             (<FlightsListItem
@@ -56,7 +40,7 @@ const FlightsList = (props) => {
               flight={fromFlight}
             />))
           }
-          <p>Flights with stops</p>
+          {fromFlightsWithStops.length > 0 && <p>Flights with stops</p>}
           {fromFlightsWithStops.map(fromFlight =>
             (<FlightsListItemWithStops
               key={fromFlight.id}
@@ -66,9 +50,16 @@ const FlightsList = (props) => {
         </div>
       }
       {
-        Array.isArray(toFlights) && toFlights.length > 0 && !message &&
+        props.fromFlights.length === 0
+        &&
+        <div className="text-center">
+          Sorry, there are no flights from {props.fromAirportName} to {props.toAirportName} that match your search
+        </div>
+      }
+      <p>{props.toAirportName}  {props.fromAirportName}</p>
+      {
+        Array.isArray(props.toFlights) && props.toFlights.length > 0 &&
         <div>
-          <p>{toAirportName}  {fromAirportName}</p>
           <p>Direct flights</p>
           {directToFlights.map(toFlight =>
             (<FlightsListItem
@@ -76,7 +67,7 @@ const FlightsList = (props) => {
               flight={toFlight}
             />))
           }
-          <p>Flights with stops</p>
+          {toFlightsWithStops.length > 0 && <p>Flights with stops</p>}
           {toFlightsWithStops.map(toFlight =>
             (<FlightsListItemWithStops
               key={toFlight.id}
@@ -85,23 +76,33 @@ const FlightsList = (props) => {
           }
         </div>
       }
+      {
+        props.toFlights.length === 0
+        &&
+        <div className="text-center">
+          Sorry, there are no flights from {props.toAirportName} to {props.fromAirportName} that match your search
+        </div>
+      }
     </div>
   );
 };
 
 FlightsList.propTypes = {
-  flights: PropTypes.shape({
-    isLoading: PropTypes.bool,
-    error: PropTypes.bool,
-    fromFlights: PropTypes.array,
-    toFlights: PropTypes.array,
-    fromAirport: PropTypes.string,
-    toAirport: PropTypes.string,
-  }).isRequired,
+  fromAirportName: PropTypes.string.isRequired,
+  toAirportName: PropTypes.string.isRequired,
+  fromFlights: PropTypes.arrayOf(PropTypes.object).isRequired,
+  toFlights: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => ({
-  flights: state.flights,
+  fromFlights: filteredFromFlights(
+    state.flights.fromFlights,
+    state.filters.fromFlightsArrivalRange, state.filters.fromFlightsDepartureRange,
+  ),
+  toFlights: filteredToFlights(
+    state.flights.toFlights,
+    state.filters.toFlightsArrivalRange, state.filters.toFlightsDepartureRange,
+  ),
 });
 
 export default connect(mapStateToProps)(FlightsList);

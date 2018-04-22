@@ -1,36 +1,31 @@
 const initialState = {
-  arrival: [],
-  departure: [],
-  duration: {
-    min: 1,
-    max: undefined,
-  },
+  toFlightsArrivalRange: [0, 23],
+  toFlightsDepartureRange: [0, 23],
+  fromFlightsArrivalRange: [0, 23],
+  fromFlightsDepartureRange: [0, 23],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_INITIAL_DURATION':
+    case 'SET_TO_DEPARTURE_FILTER':
       return ({
         ...state,
-        duration: action.durations,
+        toFlightsDepartureRange: action.toFlightsDepartureRange,
       });
-    case 'SET_DURATION':
+    case 'SET_TO_ARRIVAL_FILTER':
       return ({
         ...state,
-        duration: {
-          min: state.duration.min,
-          max: action.duration,
-        },
+        toFlightsArrivalRange: action.toFlightsArrivalRange,
       });
-    case 'SET_DEPARTURE':
+    case 'SET_FROM_DEPARTURE_FILTER':
       return ({
         ...state,
-        departure: action.departure,
+        fromFlightsDepartureRange: action.fromFlightsDepartureRange,
       });
-    case 'SET_ARRIVAL':
+    case 'SET_FROM_ARRIVAL_FILTER':
       return ({
         ...state,
-        arrival: action.arrival,
+        fromFlightsArrivalRange: action.fromFlightsArrivalRange,
       });
     default:
       return state;
