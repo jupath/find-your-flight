@@ -1,5 +1,4 @@
 node_modules/
 public/
-.env.prod
-.env.dev
+.env.firebase
 .env.token
