@@ -98,7 +98,7 @@ class Sidebar extends Component {
             onChange={this.handleOnChangeToDeparture}
             onAfterChange={this.dispatchNewToDeparture}
           />
-          <h6>Arrival in {toAirportCity}</h6>
+          <h6>Arrival in {fromAirportCity}</h6>
           {this.state.toArrivalRange[0]}:00{' '}-{' '}
           {this.state.toArrivalRange[1]}:{this.state.toArrivalRange[1] === 23 ? '59' : '00'}
           <Range
