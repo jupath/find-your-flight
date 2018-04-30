@@ -1,10 +1,52 @@
 .header {
-  //background-color: $green;
   background: url('../images/panorama.jpg') center center no-repeat;
   background-size: cover;
   color: white;
 }
 
 .header__logo {
-  color: black;
+  a {
+    color: $very-deep-grey;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.header__nav {
+  background: rgba($green, 0.95);
+  > div {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.nav__greeting {
+  align-items: center;
+  color: white;
+  display: flex;
+}
+
+.nav-item.dropdown > a {
+  color: white;
+}
+
+.dropdown-item a {
+  color: $very-deep-grey;
+  display: block;
+  width: 100%;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.nav__logout {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.header__title {
+  background: rgba(black, 0.75);
 }

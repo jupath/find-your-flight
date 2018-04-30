@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Navigation from '../layout/Navigation';
 import SearchSection from '../layout/SearchSection';
 import FlightsList from '../layout/FlightsList';
 import Sidebar from '../layout/Sidebar';
@@ -25,9 +26,9 @@ const Home = (props) => {
   return (
     <div>
       <header className="header mb-5">
+        <Navigation />
         <div className="container">
-          <h3 className="header__logo py-3 font-weight-bold">Find Your Flight</h3>
-          <div className="search-section py-5">
+          <div className="search-section py-6">
             <div className="search-section__content py-3">
               <h4 className="text-center pb-4">This is a React/Redux project built on <a href="https://developer.lufthansa.com/docs" className="text-info" target="_blank" rel="noopener noreferrer">Lufthansa Open API</a>.<br />
               You can not book flight tickets here (yet). :)
